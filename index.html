@@ -1,0 +1,58 @@
+<!doctype html>
+<html manifest="app.manifest" lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>App Offline</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<script src="modernizr.js"></script>
+	<style type=“text/css”>
+	img { 
+		background-position: center-top;
+	}
+	</style>
+
+</head>
+
+
+<script>
+	// Verifica se tem suporte cache
+	if (!Modernizr.applicationcache) {
+		alert('Lamento, seu navegador não suporta navegação offline');
+	}	
+	
+	// Crio variavel do objeto cache
+	var appCache = window.applicationCache;
+
+		// Verifico o evento carregamento da pagina
+		window.addEventListener('load', function(e) {
+
+			// Verifico evento de atualização de cache
+			appCache.addEventListener('updateready', function(e) {
+				// Se tiver atualização cache
+				if (appCache.status == appCache.UPDATEREADY) {
+					
+					appCache.swapCache();
+					
+					// Se confirmar janela navegador, recarrega página
+					if (confirm('Existem atualizações para este site. Deseja carregar as atualizações?')) {
+						window.location.reload();
+					}else {
+	      				alert('Você optou por usar arquivos desatualizados neste site.');
+					}
+				}
+			}, false);
+		}, false);
+</script> 
+
+<body>
+	
+	<div class="container">
+		<h2>Aplicação Offline</h2>
+		
+		<div class="well well-large">
+			Se você está vendo está página formatada com Bootstrap é porque seu navegador suporta acesso offline e nós fizemos um cache para que você possa ter uma melhor experiência.
+		</div>
+	</div>
+<img src="logo11w.png">
+</body>
+</html>
